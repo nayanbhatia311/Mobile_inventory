@@ -1,0 +1,883 @@
+#include<
+stdio.h>
+#include<conio.h>
+#include <stdlib.h>
+#include<string.h>
+#define MAX 20
+#define LINE fprintf(ptr,"--------------------------------------------------------------------");
+#define LINEE printf("--------------------------------------------------------------------");
+char password_given[10]="123",password_entered[10];
+char ch; //use for password field
+#define DELAY for(i=0;i<32767;i++) for(j=0;j<32767/2;j++);  //Delay function implementation using for loop
+unsigned int i,j; //i and j are used in delay function
+void write(); void model(); void samsung(); void vivo(); void oppo(); void nokia();
+void read();
+void erase();
+int password();
+int code_s=0,code_v=0,code_o=0,code_n=0; //but the value should be taken dynamically or else it will overwrite
+int index_s=0,index_v=0,index_o=0,index_n=0; //used for array index //s=samsung v=vivo and so on
+struct mob
+{
+
+    char model_nm[100];
+    float prize;
+    float display_size; //size in inch
+    int ram;
+    int rom;
+    float rear_cam;
+    float front_cam;
+    int battery;
+};
+
+struct mob samsung_str[MAX],vivo_str[MAX],oppo_str[MAX],nokia_str[MAX]; //variables str=structure
+
+int main()
+{
+
+    int option,result;
+    do
+    {
+        printf("\t\t\t\t\t\t\t\tScreen 1\n");
+        printf("Enter \n");
+        printf("0. Exit\n");
+        printf("1. Enter the details\n");
+        printf("2. Read\n");
+        printf("3. Erase\n");
+        fflush(stdin);
+        scanf("%d",&option);
+        system("cls");
+        switch(option){
+            case 0:
+                printf("Thank you");
+                break;
+            case 1:
+                system("cls");
+                result=password();
+                if(result)
+                {
+                    printf("\nAuthentication successful");
+                    DELAY
+                    system("cls");
+                    write();
+                }
+                else
+                {
+                    printf("\nInvalid password");
+                    DELAY
+                    system("cls");
+                }
+                break;
+            case 2:
+                read();
+                system("cls");
+                break;
+            case 3:
+                system("cls");
+                result=password();
+                if(result)
+                {
+                    printf("\nAuthentication successful");
+                    DELAY
+                    system("cls");
+                    erase();
+                }
+                else
+                {
+                    printf("\n\aInvalid password");
+                    DELAY
+                    system("cls");
+                }
+
+                break;
+            default:
+                printf("\aInvalid option\n");
+                DELAY
+                system("cls");
+            }
+
+    }while(option);
+
+
+    return 0;
+}
+void write()
+{
+
+    int option;
+    //print("Enter the company model")
+            do{
+                printf("\t\t\t\t\t\t\t\tScreen write\n");
+                printf("Enter \n");
+                printf("0 to exit the program\n");
+                printf("1 to exit\n");
+                printf("2 to select the company\n");
+                fflush(stdin);
+                scanf("%d",&option);
+                system("cls");
+
+                    if(option==0)
+                    {
+                        printf("Thank you");
+                        exit(0);
+                    }
+                    else if(option==1)
+                    {
+                        printf("Exiting");
+                        DELAY
+                        system("cls");
+                    }
+                    else if(option==2)
+                    {
+                    model();
+                    system("cls");
+                    }
+                    else
+                    {
+                        printf("\aInvalid option");
+                        DELAY
+                        system("cls");
+                    }
+
+            }while(option!=1);
+
+}
+
+void model()
+{
+    int option;
+    do{
+
+
+        printf("\t\t\t\t\t\t\t\tScreen Model\n");
+
+            printf("Enter the models company\n");
+            printf("0. Exit the program\n");
+            printf("1. Exit\n");
+            printf("2. Samsung\n");
+            printf("3. Vivo\n");
+            printf("4. Oppo\n");
+            printf("5. Nokia\n");
+            fflush(stdin);
+            scanf("%d",&option);
+            system("cls");
+            switch(option)
+            {
+                case 0:
+                    printf("Thank you");
+                    exit(0);
+                case 1:
+                    printf("Exiting the model menu");
+                    DELAY
+                    break;
+                case 2:
+                    samsung();
+                    system("cls");
+                    break;
+                case 3:
+                    vivo();
+                    system("cls");
+                    break;
+                case 4:
+                    oppo();
+                    system("cls");
+                    break;
+                case 5:
+                    nokia();
+                    system("cls");
+                    break;
+                default:
+                    printf("\aInvalid option");
+                    DELAY
+                    system("cls");
+            }
+
+    }while(option!=1);
+
+}
+void samsung()
+{
+
+
+     printf("\t\t\t\t\t\t\t\tScreen Samsung\n");
+
+        printf("Enter model name\n");
+        fflush(stdin);
+        gets(samsung_str[index_s].model_nm);  //gets not working // solved by using fflush(stdin) as suggested by mam
+
+        printf("Enter price\n");
+        fflush(stdin);
+        scanf("%f",&samsung_str[index_s].prize);
+
+        printf("Enter display size\n");
+        fflush(stdin);
+        scanf("%f",&samsung_str[index_s].display_size);
+
+        printf("Enter ram\n");
+        fflush(stdin);
+        scanf("%d",&samsung_str[index_s].ram);
+
+        printf("Enter rom\n");
+        fflush(stdin);
+        scanf("%d",&samsung_str[index_s].rom);
+
+        printf("Enter rear camera (in megapixel)\n");
+        fflush(stdin);
+        scanf("%f",&samsung_str[index_s].rear_cam);
+
+        printf("Enter front camera (in megapixel)\n");
+        fflush(stdin);
+        scanf("%f",&samsung_str[index_s].front_cam);
+
+        printf("Enter battery (MHz)\n");
+        fflush(stdin);
+        scanf("%d",&samsung_str[index_s].battery);
+
+
+        // Storing the above data inside a file
+        FILE *ptr;
+        ptr=fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\samsung.txt","a");
+        if(ptr==NULL)
+        {
+            printf("Error,terminate the process...");
+            exit(0);
+
+        }
+        else
+        {
+
+        fprintf(ptr,"Company=Samsung\nModel name=%s\nPrice=%f\nDisplay size=%f\nRam=%d\nRom=%d\nRear camera=%f\nFront camera=%f\nBattery=%d\n",samsung_str[index_s].model_nm,samsung_str[index_s].prize,samsung_str[index_s].display_size,samsung_str[index_s].ram,samsung_str[index_s].rom,samsung_str[index_s].rear_cam,samsung_str[index_s].front_cam,samsung_str[index_s].battery);
+        LINE
+        }
+
+        fclose(ptr);
+
+
+        printf("Data entered successfully");
+        DELAY
+
+
+}
+void vivo()
+{
+
+    printf("\t\t\t\t\t\t\t\tScreen vivo\n");
+
+        printf("Enter model name\n");
+        fflush(stdin);
+        gets(vivo_str[index_v].model_nm);
+
+        printf("Enter price\n");
+        fflush(stdin);
+        scanf("%f",&vivo_str[index_v].prize);
+
+        printf("Enter display size\n");
+        fflush(stdin);
+        scanf("%f",&vivo_str[index_v].display_size);
+
+        printf("Enter ram\n");
+        fflush(stdin);
+        scanf("%d",&vivo_str[index_v].ram);
+
+        printf("Enter rom\n");
+        fflush(stdin);
+        scanf("%d",&vivo_str[index_v].rom);
+
+        printf("Enter rear camera (in megapixel)\n");
+        fflush(stdin);
+        scanf("%f",&vivo_str[index_v].rear_cam);
+
+        printf("Enter front camera (in megapixel)\n");
+        fflush(stdin);
+        scanf("%f",&vivo_str[index_v].front_cam);
+
+        printf("Enter battery (MHz)\n");
+        fflush(stdin);
+        scanf("%d",&vivo_str[index_v].battery);
+
+
+        // Storing the above data inside a file
+        FILE *ptr;
+        ptr=fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\vivo.txt","a");
+        if(ptr==NULL)
+        {
+            printf("Error,terminate the process...");\
+            exit(0);
+
+        }
+        else
+        {
+
+        fprintf(ptr,"Company=Vivo\nModel name=%s\nPrice=%f\nDisplay size=%f\nRam=%d\nRom=%d\nRear camera=%f\nFront camera=%f\nBattery=%d\n",vivo_str[index_v].model_nm,vivo_str[index_v].prize,vivo_str[index_v].display_size,vivo_str[index_v].ram,vivo_str[index_v].rom,vivo_str[index_v].rear_cam,vivo_str[index_v].front_cam,vivo_str[index_v].battery);
+        LINE
+        }
+
+        fclose(ptr);
+
+        printf("Data entered successfully");
+        DELAY
+}
+
+void oppo()
+{
+    printf("\t\t\t\t\t\t\t\tScreen Oppo\n");
+        printf("Enter model name\n");
+        fflush(stdin);
+        gets(oppo_str[index_o].model_nm);
+
+        printf("Enter price\n");
+        fflush(stdin);
+        scanf("%f",&oppo_str[index_o].prize);
+
+        printf("Enter display size\n");
+        fflush(stdin);
+        scanf("%f",&oppo_str[index_o].display_size);
+
+        printf("Enter ram\n");
+        fflush(stdin);
+        scanf("%d",&oppo_str[index_o].ram);
+
+        printf("Enter rom\n");
+        fflush(stdin);
+        scanf("%d",&oppo_str[index_o].rom);
+
+        printf("Enter rear camera (in megapixel)\n");
+        fflush(stdin);
+        scanf("%f",&oppo_str[index_o].rear_cam);
+
+        printf("Enter front camera (in megapixel)\n");
+        fflush(stdin);
+        scanf("%f",&oppo_str[index_o].front_cam);
+
+        printf("Enter battery (MHz)\n");
+        fflush(stdin);
+        scanf("%d",&oppo_str[index_o].battery);
+
+
+         // Storing the above data inside a file
+        FILE *ptr;
+        ptr=fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\oppo.txt","a");
+        if(ptr==NULL)
+        {
+            printf("Error,terminate the process...");\
+            exit(0);
+
+        }
+        else
+        {
+
+        fprintf(ptr,"Company=Oppo\nModel name=%s\nPrice=%f\nDisplay size=%f\nRam=%d\nRom=%d\nRear camera=%f\nFront camera=%f\nBattery=%d\n",oppo_str[index_o].model_nm,oppo_str[index_o].prize,oppo_str[index_o].display_size,oppo_str[index_o].ram,oppo_str[index_o].rom,oppo_str[index_o].rear_cam,oppo_str[index_o].front_cam,oppo_str[index_o].battery);
+        LINE
+        }
+
+        fclose(ptr);
+
+        printf("Data entered successfully");
+        DELAY
+}
+void nokia()
+{
+
+    printf("\t\t\t\t\t\t\t\tScreen Nokia\n");
+
+            printf("Enter model name\n");
+            fflush(stdin);
+            gets(nokia_str[index_n].model_nm);
+
+            printf("Enter price\n");
+            fflush(stdin);
+            scanf("%f",&nokia_str[index_n].prize);
+
+            printf("Enter display size\n");
+            fflush(stdin);
+            scanf("%f",&nokia_str[index_n].display_size);
+
+            printf("Enter ram\n");
+            fflush(stdin);
+            scanf("%d",&nokia_str[index_n].ram);
+
+            printf("Enter rom\n");
+            fflush(stdin);
+            scanf("%d",&nokia_str[index_n].rom);
+
+            printf("Enter rear camera (in megapixel)\n");
+            fflush(stdin);
+            scanf("%f",&nokia_str[index_n].rear_cam);
+
+            printf("Enter front camera (in megapixel)\n");
+            fflush(stdin);
+            scanf("%f",&nokia_str[index_n].front_cam);
+
+            printf("Enter battery (MHz)\n");
+            fflush(stdin);
+            scanf("%d",&nokia_str[index_n].battery);
+
+
+        // Storing the above data inside a file
+        FILE *ptr;
+        ptr=fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\nokia.txt","a");
+        if(ptr==NULL)
+        {
+            printf("Error,terminate the process...");\
+            exit(0);
+
+        }
+        else
+        {
+
+        fprintf(ptr,"Company=Nokia\nModel name=%s\nPrice=%f\nDisplay size=%f\nRam=%d\nRom=%d\nRear camera=%f\nFront camera=%f\nBattery=%d\n",nokia_str[index_n].model_nm,nokia_str[index_n].prize,nokia_str[index_n].display_size,nokia_str[index_n].ram,nokia_str[index_n].rom,nokia_str[index_n].rear_cam,nokia_str[index_n].front_cam,nokia_str[index_n].battery);
+        LINE
+        }
+
+        fclose(ptr);
+
+        printf("Data entered successfully");
+        DELAY
+
+}
+
+void read()
+{
+    int option;
+    do{
+    printf("\t\t\t\t\t\t\t\tScreen Read\n");
+        printf("Enter\n");
+        printf("0. Exit\n");
+        printf("1. Exit the program\n");
+        printf("2. Samsung\n");
+        printf("3. Vivo\n");
+        printf("4. Oppo\n");
+        printf("5. Nokia\n");
+        printf("6. All\n");
+        fflush(stdin);
+        scanf("%d",&option);
+
+        switch(option)
+        {
+        case 0:
+            system("cls");
+            printf("Exiting Screen Read");
+            DELAY
+            system("cls");
+            break;
+        case 1:
+            system("cls");
+            printf("Thank you");
+            exit(0);
+        case 2:
+            samsung_read();
+            system("cls");
+            break;
+        case 3:
+            vivo_read();
+            system("cls");
+            break;
+        case 4:
+            oppo_read();
+            system("cls");
+            break;
+        case 5:
+            nokia_read();
+            system("cls");
+            break;
+        case 6:
+            all_read();
+            system("cls");
+            break;
+        default:
+            system("cls");
+            printf("\aInvalid option");
+            DELAY
+            system("cls");
+
+        }
+    }while(option);
+
+}
+void erase()
+{
+    int option;
+    char ch;
+    do{
+
+
+    printf("\t\t\t\t\t\t\t\tScreen Erase\n");
+    printf("0. Exit\n");
+    printf("1. Samsung\n");
+    printf("2. Vivo\n");
+    printf("3. Oppo\n");
+    printf("4. Nokia\n");
+    printf("5. Entire database\n");
+    fflush(stdin);
+    scanf("%d",&option);
+        switch(option)
+            {
+                case 0:
+                    system("cls");
+                    printf("Exiting");
+                    DELAY
+                    system("cls");
+                    break;
+                case 1:
+                    system("cls");
+                    printf("Are you sure to delete all the data(Y/N):\n");
+                    fflush(stdin);
+                    scanf("%c",&ch);
+                        //fflush(stdin);
+
+                    if(ch=='Y'||ch=='y')
+                    {
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\samsung.txt");
+                        printf("Samsung database deleted succesfully");
+                        DELAY
+                        system("cls");
+                    }
+                    else if(ch=='N'||ch=='n')
+                    {
+                        printf("Process cancelled");
+                        DELAY
+                        system("cls");
+                    }
+                    else
+                    {
+                        printf("\aInvalid option");
+                        DELAY
+                        system("cls");
+
+                    }
+                    break;
+                case 2:
+                    system("cls");
+                    printf("Are you sure to delete all the data(Y/N):\n");
+                    fflush(stdin);
+                    scanf("%c",&ch);
+                    if(ch=='Y'||ch=='y')
+                    {
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\vivo.txt");
+                        printf("Vivo database deleted succesfully");
+                        DELAY
+                        system("cls");
+                    }
+                    else if(ch=='N'||ch=='n')
+                    {
+                        printf("Process cancelled");
+                        DELAY
+                        system("cls");
+                    }
+                    else
+                    {
+                        printf("\aInvalid option");
+                        DELAY
+                        system("cls");
+
+
+                    }
+                    break;
+                case 3:
+                    system("cls");
+                    printf("Are you sure to delete all the data(Y/N):\n");
+                    fflush(stdin);
+                    scanf("%c",&ch);
+                    if(ch=='Y'||ch=='y')
+                    {
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\oppo.txt");
+                        printf("Oppo database deleted succesfully");
+                        DELAY
+                        system("cls");
+                    }
+                    else if(ch=='N'||ch=='n')
+                    {
+                        printf("Process cancelled");
+                        DELAY
+                        system("cls");
+                    }
+                    else
+                    {
+                        printf("\aInvalid option");
+                        DELAY
+                        system("cls");
+
+                    }
+                    break;
+                case 4:
+                    system("cls");
+                    printf("Are you sure to delete all the data(Y/N):\n");
+                    fflush(stdin);
+                    scanf("%c",&ch);
+                    if(ch=='Y'||ch=='y')
+                    {
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\nokia.txt");
+                        printf("Nokia database deleted succesfully");
+                        DELAY
+                        system("cls");
+                    }
+                    else if(ch=='N'||ch=='n')
+                    {
+                        printf("Process cancelled");
+                        DELAY
+                        system("cls");
+                    }
+                    else
+                    {
+                        printf("\aInvalid option");
+                        DELAY
+                        system("cls");
+
+                    }
+                    break;
+                case 5:
+                    system("cls");
+                    printf("Are you sure to delete all the data(Y/N):\n");
+                    fflush(stdin);
+                    scanf("%c",&ch);
+                    if(ch=='Y'||ch=='y')
+                    {
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\samsung.txt");
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\vivo.txt");
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\nokia.txt");
+                        remove("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\oppo.txt");
+                        printf("Entire database deleted succesfully");
+                        DELAY
+                        system("cls");
+                    }
+                    else if(ch=='N'||ch=='n')
+                    {
+                        printf("Process cancelled");
+                        DELAY
+                        system("cls");
+                    }
+                    else
+                    {
+                        printf("\aInvalid option");
+                        DELAY
+                        system("cls");
+
+                    }
+                    break;
+
+
+            }
+    }while(option);
+
+}
+
+
+int password()
+{
+
+        printf("Enter the password provided by the service operator\n");
+        fflush(stdin);
+                //gets(password_entered);
+            for(i=0; ;)      //need a proper terminating condition //maybe something to do with dynamically memory //solved using ch=='\r' condition
+            {
+                ch=getch();
+                if(ch=='\r') //when enter is pressed \r is stored instead of \n //if getche was used, we could echo the password
+                    break;
+                if(ch=='\b')
+                {
+                    printf("\b");
+                    i--;
+                    continue;
+                }
+                //printf("aa");
+                password_entered[i] = ch;
+                ch = '*' ;
+                printf("%c",ch);
+                i++;
+            }
+            password_entered[i] = '\0';
+
+            if(strcmp(password_given,password_entered) == 0)
+            {
+                return 1;
+                    /*printf("\nAuthentication successful");
+                    DELAY
+                    system("cls");
+                    erase(); */
+            }
+            else
+            {
+                return 0;
+                   /* printf("\nInvalid password");
+                    DELAY
+                    system("cls");
+                    */
+            }
+
+}
+
+ samsung_read()
+ {
+     system("cls");
+     FILE *fptr;
+     char ch;
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\samsung.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+    getch();
+    fclose(fptr);
+}
+
+vivo_read()
+{
+    system("cls");
+     FILE *fptr;
+     char ch;
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\vivo.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+    getch();
+    fclose(fptr);
+}
+
+oppo_read()
+{
+    system("cls");
+    FILE *fptr;
+    char ch;
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\oppo.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+    getch();
+    fclose(fptr);
+}
+
+nokia_read()
+{
+    system("cls");
+    FILE *fptr;
+    char ch;
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\nokia.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+    getch();
+    fclose(fptr);
+
+}
+
+all_read()
+{
+    system("cls");
+    FILE *fptr;
+    char ch;
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\samsung.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+
+    fclose(fptr);
+    LINEE
+
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\vivo.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+
+    fclose(fptr);
+    LINEE
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\oppo.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+
+    fclose(fptr);
+    LINEE
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\nokia.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+
+    fclose(fptr);
+    LINEE
+
+    fptr = fopen("C:\\Users\\Nayan Bhatia\\Desktop\\file_operation\\nokia.txt", "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        DELAY
+    }
+    ch = fgetc(fptr);
+    while (ch != EOF)
+    {
+        printf ("%c", ch);
+        ch = fgetc(fptr);
+    }
+    getch();
+    fclose(fptr);
+    LINEE
+}
